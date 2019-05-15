@@ -1,0 +1,20 @@
+.bg {
+    background: url(../images/rupaul-bg.png) no-repeat center center fixed, url(../images/glitter.gif) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover; 
+    background-color: transparent;
+}
+
+.jumbotron {
+    background: transparent;
+    height: 200px;
+    padding: 0px;
+    z-index: 100;
+}
+
+.logo {
+    width: 400px;
+}
+
