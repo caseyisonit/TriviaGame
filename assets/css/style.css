@@ -18,3 +18,27 @@
     width: 400px;
 }
 
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#timer {
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+
+.button{
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 4px;
+    background: rgba(13, 96, 226, 0.75);
+    padding: 20px 0px;
+    border-radius: 3px;
+    margin: 30px 0px;
+  }
