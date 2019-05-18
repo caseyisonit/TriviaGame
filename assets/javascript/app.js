@@ -21,7 +21,7 @@ var questionArray = [
         ],
     }
 ];
-// console.log(questionArray[0]);
+// console.log(questionArray.answers);
 var correctcounter = correct++;
 var wrongcounter = wrong++;
 var correct = 0;
@@ -30,7 +30,9 @@ var wrong = 0;
 var timer = $("#timer");
 var questionDiv = $("#question");
 var answersDiv = $("#answers");
-var buttonText = $(".button")
+var buttonText = $(".button");
+
+
 
 //===Function===/
 $(document).ready(function () {
@@ -38,17 +40,21 @@ $(document).ready(function () {
     //Function to print question and answers
     function createQuestion() {
         for (var i = 0; i < questionArray.length; i++) {
-            $(questionDiv).text(questionArray[i].question);
+            var question = questionArray[i].question;
+            $(questionDiv).text(question);
 
-            //for loop to print the answers
-            for (var j = 0; j < questionArray[i].answers.length; j++){
-                $(answersDiv).html("<div class='button'>" + questionArray[i].answers[j].answer + "</div>");
+            $(answersDiv).empty();
 
-                console.log("this is: " + $(this))
-            } 
+            function createAnswers() {
+                for (var k = 0; k < questionArray[i].answers.length; k++) {
+                    var answers = questionArray[i].answers[k];
+                    $(answersDiv).append("<div class='button'>" + answers.answer + "</div>");
+                };
+            };
+            createAnswers();
         };
     };
-    createQuestion(questionArray);
+    createQuestion();
 
     //startgame
     //question timer
