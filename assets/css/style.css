@@ -22,12 +22,12 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-#timer {
+#time {
     font-weight: 700;
     padding-bottom: 20px;
 }
 
-.button{
+.button, .answer{
     width: auto;
     height: auto;
     font-size: 20px;

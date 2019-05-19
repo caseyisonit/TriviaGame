@@ -21,12 +21,14 @@ var questionArray = [
         ],
     }
 ];
-// console.log(questionArray.answers);
-var correctcounter = correct++;
-var wrongcounter = wrong++;
+console.log("this is correct image gif: " + questionArray[0].image);
+var correctCounter = 0;
+var wrongCounter = 0;
 var correct = 0;
 var wrong = 0;
-var timer = 15;
+var timer = 16;
+var counter = 0;
+var clock;
 var intervalId;
 
 var timerDiv = $("#timer");
@@ -38,51 +40,119 @@ var buttonText = $(".button");
 
 //===Function===/
 $(document).ready(function () {
-    //Global functions
+    //on click functions
+    $('body').on('click', '#start.button', function (event) {
+        event.preventDefault();
+        startGame();
+        // $('.answers').css('visibility', 'visible');
+    });
+
+    $('body').on('click', '.answer', function (event) {
+        console.log($(this));
+        chosenAnswer = $(this).text();
+        var answerCounter = questionArray[counter].answers;
+
+        var answer = $('.answer');
+        for (var i = 0; i < answerCounter.length; i++) {
+            if (chosenAnswer === answerCounter[i].answer && answerCounter[i].value === true) {
+                clearInterval(clock);
+                var right = $(this).attr('class', 'right-answer answer');
+                rightAnswer();
+            } else if (chosenAnswer === answerCounter[i].answer && answerCounter[i].value === false) {
+                clearInterval(clock);
+                $(this).attr('class', 'wrong-answer answer');
+                $('.first-answer').css('background-color', 'green');
+                $('.first-answer').css('color', 'white');
+                wrongAnswer();
+            }
+        }
+    });
+
+    $('body').on('click', '.reset-button', function (event) {
+        event.preventDefault();
+        resetGame();
+    });
     //Function to print question and answers
-    function createQuestion() {
-// for loop to print question and answers
+    function startGame() {
+        // for loop to print question and answers
         for (var i = 0; i < questionArray.length; i++) {
-            var question = questionArray[i].question;
+            var question = questionArray[counter].question;
             questionDiv.text(question);
-
+            
             answersDiv.empty();
-
+            
             function createAnswers() {
                 for (var k = 0; k < questionArray[i].answers.length; k++) {
                     var answers = questionArray[i].answers[k];
-                    answersDiv.append("<div class='button'>" + answers.answer + "</div>");
+                    answersDiv.append("<div class='answer'>" + answers.answer + "</div>");
                 };
             };
             createAnswers();
         };
-
-//timer functions
-        function countdown() {
-            timerDiv.text(timer);
-            clearInterval(intervalId);
-            intervalId = setInterval(decrement, 1000);
-        };
-
-        function decrement() {
-            timer--;
-            timerDiv.text(timer);
-            if (timer === 0) {
-                stop();
-                alert("Time Up!");
-            }
-        };
-
-        function stop() {
-            clearInterval(intervalId);
-        };
-
-        countdown();
-//end time functions
-
+        timerHolder();
     };
-    createQuestion();
-
+    
+    function rightAnswer() {
+        correctCounter++;
+        $('#time').html('<p>Right answers: ' + correctCounter + '</p><br>');
+        setTimeout(questionCounter, 2000)
+    };
+    
+    function wrongAnswer() {
+        wrongCounter++;
+        $('#time').html('<p>Wrong answers: ' + wrongCounter + '</p>');
+        setTimeout(questionCounter, 2000);
+    }
+    
+    function questionCounter() {
+        if (counter < 6) {
+            counter++;
+            startGame();
+            timer = 16;
+            timerHolder();
+        } else {
+            finishGame();
+        }
+    }
+    
+    // Timer function
+    function timerHolder() {
+        clearInterval(clock);
+        clock = setInterval(seconds, 1000);
+        function seconds() {
+            if (timer === 0) {
+                clearInterval(clock);
+                wrongAnswer();
+            } else if (timer > 0) {
+                timer--;
+            }
+            $('#time').text(timer);
+        }
+    }
+    
+    // Finishing the game
+    function finishGame() {
+        var final = $('.main')
+        .html("<p>All done, here's how you did!<p><br><br>")
+        .append('<p>Correct Answers: ' + correctCounter + '</p><br>')
+        .append('<p>Wrong Answers: ' + wrongCounter + '</p>');
+        $(final).attr('<div>');
+        $(final).attr('class', 'final');
+        $('.final').append('<p><a class="btn btn-primary btn-lg reset-button" href="#">Shantay Play Again</a></p>');
+    }
+    
+    // Reset the game
+    function resetGame() {
+        counter = 0;
+        correctCounter = 0;
+        wrongCounter = 0;
+        timer = 15;
+        startGame();
+        timerHolder();
+    }
+});
+    
+    
 
     //function for incorrect answer diplay
 
@@ -94,7 +164,6 @@ $(document).ready(function () {
     //if/then
     //empty/reset function
 
-});
 
 //===Callbacks===/
 
