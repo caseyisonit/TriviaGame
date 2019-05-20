@@ -207,8 +207,8 @@ var buttonText = $(".button");
         clock = setInterval(seconds, 1000);
         function seconds() {
             if (timer === 0) {
+                clearInterval(clock);
                 wrongAnswer();
-                // clearInterval(clock);
             } else if (timer > 0) {
                 timer--;
             }
