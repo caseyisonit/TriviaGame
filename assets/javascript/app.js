@@ -1,3 +1,4 @@
+$(document).ready(function reload() {
 //===Global Variables===/
 // object array for the questions, answersArray (options), correct answer, image/gif
 var questionArray = [
@@ -9,7 +10,7 @@ var questionArray = [
             { answer: 'Jade Jolie', value: false },
             { answer: 'Adore Delano', value: false }
         ],
-        image: "https://media.giphy.com/media/26gs7ff1HFaA7KOUE/source.gif"
+        image: "assets/images/absolutely.gif"
     },
     {
         question: "Who told Sharon Needles to 'go back to Party City where you belong'?",
@@ -19,6 +20,7 @@ var questionArray = [
             { answer: "Phi Phi O'Hara", value: true },
             { answer: 'Chad Michaels', value: false }
         ],
+        image: "assets/images/partycity.gif"
     },
     {
         question: "Which queen is the first to enter the workroom in Season 7??",
@@ -28,6 +30,7 @@ var questionArray = [
             { answer: 'Ginger Minj', value: false },
             { answer: 'Jaidynn Dior Fierce', value: false }
         ],
+        image: "assets/images/missfame.gif"
     },
     {
         question: "Who was the first contestant to compete on four separate series of Drag Race?",
@@ -37,15 +40,17 @@ var questionArray = [
             { answer: 'Manila Luzon', value: false },
             { answer: 'Shangela', value: true }
         ],
+        image: "assets/images/shangela.gif"
     },
     {
-        question: "Which pair of queens fall victim to the first ever double elimination??",
+        question: "Which pair of queens fall victim to the first ever double elimination?",
         answers: [
             { answer: 'Honey Mahogany and Vivienne Pinay', value: true },
             { answer: 'Laila McQueen and Dax ExclamationPoint', value: false },
-            { answer: 'Valentina and Nina Bonina Brown', value: true },
+            { answer: 'Valentina and Nina Bonina Brown', value: false },
             { answer: 'Vivacious and Magnolia Crawford', value: false }
         ],
+        image: "assets/images/honey.gif"
     },
     {
         question: "Which queen physically picked someone up during their lip sync?",
@@ -55,6 +60,7 @@ var questionArray = [
             { answer: 'Mimi Imfirst', value: true },
             { answer: 'Delta Work', value: false }
         ],
+        image: "assets/images/mimi.gif"
     },
     {
         question: "Which word did Adore Delano like to constantly repeat?",
@@ -64,6 +70,7 @@ var questionArray = [
             { answer: 'Totally', value: false },
             { answer: 'Bam', value: false }
         ],
+        image: "assets/images/party.gif"
     },
     {
         question: "Which challenge did RuPaul describe as the worst ever?",
@@ -73,6 +80,7 @@ var questionArray = [
             { answer: 'Pharmarusical', value: false },
             { answer: 'Shakesqueer', value: true }
         ],
+        image: "assets/images/shakesqueer.gif"
     },
     {
         question: "Season 6 filmed a secret joint crowning between...",
@@ -82,28 +90,30 @@ var questionArray = [
             { answer: 'Courtney Act and Bianca Del Rio', value: false },
             { answer: 'Darienne Lake and Bianca Del Rio', value: false }
         ],
+        image: "assets/images/biancaadore.gif"
     },
     {
-        question: "Who told Sharon Needles to 'go back to Party City where you belong'?",
+        question: "Which household item did Monet X Change turn into a dress?",
         answers: [
             { answer: 'Bin liners', value: false },
             { answer: 'Shower curtains', value: false },
             { answer: 'Sponges', value: true },
             { answer: 'Forks', value: false }
         ],
-    },
+        image: "assets/images/sponge.gif"
+    }
 ];
-console.log("this is correct image gif: " + questionArray[0].image);
+
 var correctCounter = 0;
 var wrongCounter = 0;
 var correct = 0;
 var wrong = 0;
-var timer = 16;
+var timer = 11;
 var counter = 0;
 var clock;
 var intervalId;
 
-var timerDiv = $("#timer");
+var timerDiv = $("#time");
 var questionDiv = $("#question");
 var answersDiv = $("#answers");
 var buttonText = $(".button");
@@ -111,7 +121,6 @@ var buttonText = $(".button");
 
 
 //===Function===/
-$(document).ready(function () {
     //on click functions
     $('body').on('click', '#start.button', function (event) {
         event.preventDefault();
@@ -119,7 +128,7 @@ $(document).ready(function () {
     });
 
     $('body').on('click', '.answer', function (event) {
-        // console.log($(this));
+
         chosenAnswer = $(this).text();
         var answerCounter = questionArray[counter].answers;
 
@@ -143,6 +152,7 @@ $(document).ready(function () {
     });
     //Function to print question and answers
     function startGame() {
+        timerHolder();
         // for loop to print question and answers
         for (var i = 0; i < questionArray.length; i++) {
             var questionText = questionArray[counter].question;
@@ -159,31 +169,32 @@ $(document).ready(function () {
             answersDiv.append("<div class='answer' id='choice4'>" + questionArray[counter].answers[3].answer + "</div>");
             $('#choice4').attr('value', questionArray[i].answers[3].value);
         };
-        timerHolder();
     };
     console.log("This is question: " + question);
 
     function rightAnswer() {
+        timerDiv.text("YOU'RE A WINNER BABY!");
         correctCounter++;
-        timerDiv.text('Right answers: ' + correctCounter);
-        questionDiv.text('WAY TO GO!');
+        questionDiv.text('Right answers: ' + correctCounter);
         answersDiv.html('<img src="' + questionArray[counter].image + '"/>');
-        setTimeout(questionCounter, 4000);
+        counter++;
+        setTimeout(questionCounter, 2000);
     };
-console.log(questionArray[counter].image)
-    function wrongAnswer() {
-        wrongCounter++;
-        $('#time').html('<p>Wrong answers: ' + wrongCounter + '</p>');
-        $('#question').text('YOU DONE MESSED UP KITTY GRRRRL!');
-        answersDiv.html('<img src="' + questionArray[counter].image + '"/>');
-        setTimeout(questionCounter, 4000);
-    }
 
+    function wrongAnswer() {
+        timerDiv.text('YOU DONE MESSED UP KITTY GRRRRL!');
+        wrongCounter++;
+        questionDiv.text('Wrong answers: ' + wrongCounter);
+        answersDiv.html('<img src="' + questionArray[counter].image + '"/>');
+        counter++;
+        setTimeout(questionCounter, 2000);
+    }
+    
+    //set the limit of the game
     function questionCounter() {
         if (counter < 10) {
-            counter++;
             startGame();
-            timer = 16;
+            timer = 11;
             timerHolder();
         } else {
             finishGame();
@@ -196,24 +207,22 @@ console.log(questionArray[counter].image)
         clock = setInterval(seconds, 1000);
         function seconds() {
             if (timer === 0) {
-                clearInterval(clock);
                 wrongAnswer();
+                // clearInterval(clock);
             } else if (timer > 0) {
                 timer--;
             }
-            $('#time').text(timer);
+            timerDiv.text(timer);
         }
     }
 
     // Finishing the game
     function finishGame() {
-        var final = $('.main')
-            .html("<p>All done, here's how you did!<p><br><br>")
-            .append('<p>Correct Answers: ' + correctCounter + '</p><br>')
-            .append('<p>Wrong Answers: ' + wrongCounter + '</p>');
-        $(final).attr('<div>');
-        $(final).attr('class', 'final');
-        $('.final').append('<p><a class="btn btn-primary btn-lg reset-button" href="#">Shantay Play Again</a></p>');
+        timerDiv.text('ConDRAGulations!');
+        questionDiv.empty();
+        questionDiv.text('Right answers: ' + correctCounter + '   |   Wrong answers: ' + wrongCounter);
+        answersDiv.empty();
+        answersDiv.html('<div class="answer reset-button"> Shantay Play Again</div>');
     }
 
     // Reset the game
@@ -221,24 +230,9 @@ console.log(questionArray[counter].image)
         counter = 0;
         correctCounter = 0;
         wrongCounter = 0;
-        timer = 15;
-        startGame();
+        timer = 11;
+        reload();
         timerHolder();
     }
 });
-
-
-
-    //function for incorrect answer diplay
-
-    //startgame
-    //question timer
-    // answer timer
-    // for loop to run through the array 
-    //onclick event for single selection
-    //if/then
-    //empty/reset function
-
-
-//===Callbacks===/
 
