@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 .bg {
     background: url(../images/rupaul-bg.png) no-repeat center center fixed, url(../images/glitter.gif) no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -18,16 +22,12 @@
     width: 400px;
 }
 
-body {
-    font-family: 'Roboto Condensed', sans-serif;
-}
-
 #time {
     font-weight: 700;
     padding-bottom: 20px;
 }
 
-.button, .answer{
+.button, .answer, .reset-button{
     width: auto;
     height: auto;
     font-size: 20px;
@@ -38,11 +38,12 @@ body {
     text-align: center;
     letter-spacing: 4px;
     background: rgba(13, 96, 226, 0.75);
-    padding: 20px 0px;
+    padding: 20px;
     border-radius: 3px;
     margin: 30px 0px;
   }
 
   .giphy {
       margin-top: 20px;
+      width: 100%;
   }

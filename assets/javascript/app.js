@@ -106,17 +106,13 @@ var questionArray = [
 
 var correctCounter = 0;
 var wrongCounter = 0;
-var correct = 0;
-var wrong = 0;
-var timer = 11;
+var timer = 16;
 var counter = 0;
 var clock;
-var intervalId;
 
 var timerDiv = $("#time");
 var questionDiv = $("#question");
 var answersDiv = $("#answers");
-var buttonText = $(".button");
 
 
 
@@ -176,25 +172,25 @@ var buttonText = $(".button");
         timerDiv.text("YOU'RE A WINNER BABY!");
         correctCounter++;
         questionDiv.text('Right answers: ' + correctCounter);
-        answersDiv.html('<img src="' + questionArray[counter].image + '"/>');
+        answersDiv.html('<img class="giphy" src="' + questionArray[counter].image + '"/>');
         counter++;
-        setTimeout(questionCounter, 2000);
+        setTimeout(questionCounter, 4000);
     };
 
     function wrongAnswer() {
         timerDiv.text('YOU DONE MESSED UP KITTY GRRRRL!');
         wrongCounter++;
         questionDiv.text('Wrong answers: ' + wrongCounter);
-        answersDiv.html('<img src="' + questionArray[counter].image + '"/>');
+        answersDiv.html('<img class="giphy" src="' + questionArray[counter].image + '"/>');
         counter++;
-        setTimeout(questionCounter, 2000);
+        setTimeout(questionCounter, 4000);
     }
     
     //set the limit of the game
     function questionCounter() {
         if (counter < 10) {
             startGame();
-            timer = 11;
+            timer = 16;
             timerHolder();
         } else {
             finishGame();
@@ -211,8 +207,8 @@ var buttonText = $(".button");
                 wrongAnswer();
             } else if (timer > 0) {
                 timer--;
+                timerDiv.text(timer);
             }
-            timerDiv.text(timer);
         }
     }
 
@@ -222,7 +218,7 @@ var buttonText = $(".button");
         questionDiv.empty();
         questionDiv.text('Right answers: ' + correctCounter + '   |   Wrong answers: ' + wrongCounter);
         answersDiv.empty();
-        answersDiv.html('<div class="answer reset-button"> Shantay Play Again</div>');
+        answersDiv.html('<div class="reset-button"> Shantay Play Again</div>');
     }
 
     // Reset the game
@@ -230,8 +226,8 @@ var buttonText = $(".button");
         counter = 0;
         correctCounter = 0;
         wrongCounter = 0;
-        timer = 11;
-        reload();
+        timer = 16;
+        startGame();
         timerHolder();
     }
 });
